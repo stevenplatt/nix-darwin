@@ -81,13 +81,14 @@
       system.defaults = {
         dock.autohide = true;
         dock.orientation = "left";
+        dock.minimize-to-application = true;
         dock.persistent-apps = [
             "/Applications/WhatsApp.app"
             "/System/Applications/Messages.app"
-            "/Applications/Spark Desktop.app"
-            "/Applications/Google Chrome.app"
             "/Applications/Antigravity.app"
             "/Applications/Ghostty.app"
+            "/Applications/Google Chrome.app"
+            "/Applications/Spark Desktop.app"
         ];
         dock.wvous-br-corner = 1;
         dock.wvous-bl-corner = 1;
