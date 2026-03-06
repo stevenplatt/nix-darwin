@@ -30,11 +30,13 @@
           pkgs.ansible
           pkgs.awscli2
           pkgs.btop
+          pkgs.cmatrix
           pkgs.fastfetch
           pkgs.htop
           pkgs.google-cloud-sdk
           pkgs.kubectl
           pkgs.kubernetes-helm
+          pkgs.nmap
           pkgs.vim
         ];
 
@@ -56,6 +58,7 @@
             "logi-options+"
             "slack"
             "the-unarchiver"
+            "wireshark"
             "zoom"
             "zotero"
         ];
@@ -81,6 +84,7 @@
         dock.persistent-apps = [
             "/Applications/WhatsApp.app"
             "/System/Applications/Messages.app"
+            "/Applications/Spark Desktop.app"
             "/Applications/Google Chrome.app"
             "/Applications/Antigravity.app"
             "/Applications/Ghostty.app"
