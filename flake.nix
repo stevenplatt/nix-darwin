@@ -26,17 +26,23 @@
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
-        [ pkgs.vim
+        [ pkgs.aichat
+          pkgs.ansible
           pkgs.awscli2
+          pkgs.btop
+          pkgs.fastfetch
+          pkgs.htop
           pkgs.google-cloud-sdk
           pkgs.kubectl
           pkgs.kubernetes-helm
-          pkgs.ansible
-          pkgs.fastfetch
+          pkgs.vim
         ];
 
       homebrew = {
         enable = true;
+        brews = [
+          "mas"
+        ];
         casks = [
             "affinity"
             "antigravity"
