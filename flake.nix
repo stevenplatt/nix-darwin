@@ -30,7 +30,6 @@
           pkgs.ansible
           pkgs.argocd
           pkgs.awscli2
-          pkgs.btop
           pkgs.cmatrix
           pkgs.fastfetch
           pkgs.htop
@@ -39,7 +38,6 @@
           pkgs.kind
           pkgs.kubectl
           pkgs.kubernetes-helm
-          pkgs.kustomize
           pkgs.nmap
           pkgs.stern
           pkgs.vim
