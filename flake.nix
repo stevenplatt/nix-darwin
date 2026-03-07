@@ -28,15 +28,20 @@
       environment.systemPackages =
         [ pkgs.aichat
           pkgs.ansible
+          pkgs.argocd
           pkgs.awscli2
           pkgs.btop
           pkgs.cmatrix
           pkgs.fastfetch
           pkgs.htop
           pkgs.google-cloud-sdk
+          pkgs.k9s
+          pkgs.kind
           pkgs.kubectl
           pkgs.kubernetes-helm
+          pkgs.kustomize
           pkgs.nmap
+          pkgs.stern
           pkgs.vim
         ];
 
@@ -58,7 +63,7 @@
             "logi-options+"
             "slack"
             "the-unarchiver"
-            "wireshark"
+            "wireshark-app"
             "zoom"
             "zotero"
         ];
@@ -121,8 +126,6 @@
     };
   in
   {
-    # Build switch to darwin flake using:
-    # $ sudo darwin-rebuild switch --flake /etc/nix-darwin#Stevens-MacBook-Air
     # Assumes computer hostname is "Stevens-MacBook-Air"
     darwinConfigurations."Stevens-MacBook-Air" = nix-darwin.lib.darwinSystem {
       modules = [ 
@@ -158,5 +161,3 @@
     };
   };
 }
-
-# Update using "$ nix flake update" from the nix dir, then the darwin-rebuild switch command from above
