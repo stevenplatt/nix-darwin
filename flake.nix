@@ -50,14 +50,8 @@
       homebrew = {
         enable = true;
         global.autoUpdate = true;
-        onActivation = {
-          cleanup = "zap"; # remove packages installe outside of nix
-          autoUpdate = true;
-          upgrade = true;
-        };
-        brews = [
-          "mas"
-        ];
+        onActivation = { cleanup = "zap"; autoUpdate = true; upgrade = true; };
+        brews = [ "mas" ];
         casks = [
             "affinity"
             "antigravity"
@@ -119,9 +113,6 @@
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
 
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
@@ -150,13 +141,11 @@
             # User owning the Homebrew prefix
             user = "telecomsteve";
 
-            # Optional: Declarative tap management
             taps = {
               "homebrew/homebrew-core" = homebrew-core;
               "homebrew/homebrew-cask" = homebrew-cask;
             };
 
-            # Optional: Enable fully-declarative tap management
             # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
             mutableTaps = false;
           };
