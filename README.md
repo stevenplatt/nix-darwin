@@ -18,6 +18,29 @@ This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) that decl
 - **Homebrew casks & Mac App Store apps** — GUI applications managed through [nix-homebrew](https://github.com/zhaofengli/nix-homebrew)
 - **macOS system preferences** — Dock, Finder, login window, and Control Center settings
 
+## File Structure
+
+The configuration is split into focused modules for easier maintenance:
+
+```
+nix-darwin/
+├── flake.nix              # Flake inputs and module wiring
+├── flake.lock             # Pinned dependency versions
+├── modules/
+│   ├── packages.nix       # Nix system packages (CLI tools)
+│   ├── homebrew.nix       # Homebrew brews, casks, and Mac App Store apps
+│   └── system.nix         # macOS system preferences and nix settings
+├── LICENSE
+└── README.md
+```
+
+| File | Purpose | When to edit |
+|------|---------|-------|
+| `flake.nix` | Defines flake inputs and wires modules together | Adding new flake inputs or modules |
+| `modules/packages.nix` | Nix CLI packages (`environment.systemPackages`) | Adding or removing CLI tools |
+| `modules/homebrew.nix` | Homebrew brews, casks, and Mac App Store apps | Adding or removing GUI apps |
+| `modules/system.nix` | macOS defaults (Dock, Finder, etc.) and nix settings | Changing system preferences |
+
 ## Prerequisites
 
 - macOS on Apple Silicon (`aarch64-darwin`)
@@ -178,18 +201,18 @@ Configured under `system.defaults`. Reference all available options at [MyNixOS]
 
 ### Adding a new CLI tool
 
-Add the package to `environment.systemPackages` in `flake.nix`:
+Add the package to the list in `modules/packages.nix`:
 
 ```nix
-environment.systemPackages = [
-  pkgs.vim
-  pkgs.your-new-package   # ← add here
+environment.systemPackages = with pkgs; [
+  vim
+  your-new-package   # ← add here
 ];
 ```
 
 ### Adding a new Homebrew cask
 
-Add the cask name to `homebrew.casks`:
+Add the cask name to `homebrew.casks` in `modules/homebrew.nix`:
 
 ```nix
 homebrew.casks = [
@@ -199,7 +222,7 @@ homebrew.casks = [
 
 ### Adding a Mac App Store app
 
-Find the app's numeric ID (visible in the App Store URL) and add it to `homebrew.masApps`:
+Find the app's numeric ID (visible in the App Store URL) and add it to `homebrew.masApps` in `modules/homebrew.nix`:
 
 ```nix
 homebrew.masApps = {
@@ -209,7 +232,7 @@ homebrew.masApps = {
 
 ### Changing macOS system preferences
 
-Browse available options at [MyNixOS — system.defaults](https://mynixos.com/nix-darwin/options/system.defaults) and add them under `system.defaults`:
+Browse available options at [MyNixOS — system.defaults](https://mynixos.com/nix-darwin/options/system.defaults) and add them under `system.defaults` in `modules/system.nix`:
 
 ```nix
 system.defaults = {

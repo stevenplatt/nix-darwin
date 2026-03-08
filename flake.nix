@@ -13,122 +13,14 @@
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, ... }:
-  let
-    configuration = { pkgs, ... }: {
-      nixpkgs.config.allowUnfree = true;
-      system.primaryUser = "telecomsteve";
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages = with pkgs; [
-          aichat
-          ansible
-          argocd
-          awscli2
-          cmatrix
-          coreutils
-          fastfetch
-          gh
-          go
-          google-cloud-sdk
-          htop
-          iperf3
-          jetbrains-mono
-          jq
-          k9s
-          kind
-          kubectl
-          kubernetes-helm
-          nmap
-          stern
-          tree
-          unzip
-          vim
-          watch
-          wget
-        ];
-
-      homebrew = {
-        enable = true;
-        global.autoUpdate = true;
-        onActivation = { cleanup = "zap"; autoUpdate = true; upgrade = true; };
-        brews = [ "mas" ];
-        casks = [
-            "affinity"
-            "antigravity"
-            "applite"
-            "balenaetcher"
-            "discord"
-            "docker-desktop"
-            "ghostty"
-            "google-chrome"
-            "lens"
-            "logi-options+"
-            "slack"
-            "the-unarchiver"
-            "wireshark-app"
-            "zoom"
-            "zotero"
-        ];
-        masApps = {
-            "Davinci Resolve" = 571213070;
-            "Mela" = 1568924476;
-            "Slack" = 803453959;
-            "Spark Mail" = 6445813049;
-            "Swift Playground" = 1496833156;
-            "WhatsApp" = 310633997;
-            "XCode" = 497799835;
-        };
-      };
-
-      # System settings (https://mynixos.com/nix-darwin/options/system.defaults)
-      system.defaults = {
-        dock = {
-          autohide = true;
-          orientation = "left";
-          minimize-to-application = true;
-          persistent-apps = [
-            "/Applications/WhatsApp.app"
-            "/System/Applications/Messages.app"
-            "/Applications/Antigravity.app"
-            "/Applications/Ghostty.app"
-            "/Applications/Google Chrome.app"
-            "/Applications/Spark Desktop.app"
-          ];
-          wvous-br-corner = 1;
-          wvous-bl-corner = 1;
-          wvous-tr-corner = 2;
-          wvous-tl-corner = 1;
-        };
-        finder = {
-          FXPreferredViewStyle = "clmv";
-          ShowPathbar = true;
-          AppleShowAllFiles = true;
-          NewWindowTarget = "Documents";
-          QuitMenuItem = true;
-        };
-        loginwindow.GuestEnabled = false;
-        controlcenter.BatteryShowPercentage = true;
-      };
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
-    };
-  in
   {
     # Assumes computer hostname is "Stevens-MacBook-Air"
     darwinConfigurations."Stevens-MacBook-Air" = nix-darwin.lib.darwinSystem {
-      modules = [ 
-        configuration 
+      specialArgs = { inherit self; };
+      modules = [
+        ./modules/packages.nix
+        ./modules/homebrew.nix
+        ./modules/system.nix
         nix-homebrew.darwinModules.nix-homebrew
         {
           nix-homebrew = {
@@ -150,11 +42,11 @@
             mutableTaps = false;
           };
         }
-        # Optional: Align homebrew taps config with nix-homebrew
-        ({config, ...}: {
+        # Align homebrew taps config with nix-homebrew
+        ({ config, ... }: {
           homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
         })
-        ];
+      ];
     };
   };
 }
