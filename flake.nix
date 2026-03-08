@@ -8,9 +8,7 @@
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     # Optional: Declarative tap management with homebrew
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
+    homebrew-core = {url = "github:homebrew/homebrew-core"; flake = false;
     };
     homebrew-cask = {
       url = "github:homebrew/homebrew-cask";
@@ -25,26 +23,42 @@
       system.primaryUser = "telecomsteve";
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ pkgs.aichat
-          pkgs.ansible
-          pkgs.argocd
-          pkgs.awscli2
-          pkgs.cmatrix
-          pkgs.fastfetch
-          pkgs.htop
-          pkgs.google-cloud-sdk
-          pkgs.k9s
-          pkgs.kind
-          pkgs.kubectl
-          pkgs.kubernetes-helm
-          pkgs.nmap
-          pkgs.stern
-          pkgs.vim
+      environment.systemPackages = with pkgs; [
+          aichat
+          ansible
+          argocd
+          awscli2
+          cmatrix
+          coreutils
+          fastfetch
+          gh
+          go
+          google-cloud-sdk
+          htop
+          iperf3
+          jetbrains-mono
+          jq
+          k9s
+          kind
+          kubectl
+          kubernetes-helm
+          nmap
+          stern
+          tree
+          unzip
+          vim
+          watch
+          wget
         ];
 
       homebrew = {
         enable = true;
+        global.autoUpdate = true;
+        onActivation = {
+          cleanup = "zap"; # remove packages installe outside of nix
+          autoUpdate = true;
+          upgrade = true;
+        };
         brews = [
           "mas"
         ];
@@ -65,7 +79,6 @@
             "zoom"
             "zotero"
         ];
-        # Install apps from Mac App Store
         masApps = {
             "Davinci Resolve" = 571213070;
             "Mela" = 1568924476;
@@ -75,33 +88,34 @@
             "WhatsApp" = 310633997;
             "XCode" = 497799835;
         };
-        onActivation.cleanup = "zap"; # remove packages installe outside of nix
-        onActivation.autoUpdate = true;
-        onActivation.upgrade = true;
       };
 
       # System settings (https://mynixos.com/nix-darwin/options/system.defaults)
       system.defaults = {
-        dock.autohide = true;
-        dock.orientation = "left";
-        dock.minimize-to-application = true;
-        dock.persistent-apps = [
+        dock = {
+          autohide = true;
+          orientation = "left";
+          minimize-to-application = true;
+          persistent-apps = [
             "/Applications/WhatsApp.app"
             "/System/Applications/Messages.app"
             "/Applications/Antigravity.app"
             "/Applications/Ghostty.app"
             "/Applications/Google Chrome.app"
             "/Applications/Spark Desktop.app"
-        ];
-        dock.wvous-br-corner = 1;
-        dock.wvous-bl-corner = 1;
-        dock.wvous-tr-corner = 2;
-        dock.wvous-tl-corner = 1;
-        finder.FXPreferredViewStyle = "clmv";
-        finder.ShowPathbar = true;
-        finder.AppleShowAllFiles = true;
-        finder.NewWindowTarget = "Documents";
-        finder.QuitMenuItem = true;
+          ];
+          wvous-br-corner = 1;
+          wvous-bl-corner = 1;
+          wvous-tr-corner = 2;
+          wvous-tl-corner = 1;
+        };
+        finder = {
+          FXPreferredViewStyle = "clmv";
+          ShowPathbar = true;
+          AppleShowAllFiles = true;
+          NewWindowTarget = "Documents";
+          QuitMenuItem = true;
+        };
         loginwindow.GuestEnabled = false;
         controlcenter.BatteryShowPercentage = true;
       };
