@@ -7,14 +7,10 @@
     casks = [
       "affinity"
       "antigravity"
-      "applite"
       "balenaetcher"
       "discord"
       "docker-desktop"
-      "ghostty"
       "google-chrome"
-      "lens"
-      "logi-options+"
       "slack"
       "the-unarchiver"
       "wireshark-app"
@@ -25,7 +21,6 @@
       "Davinci Resolve" = 571213070;
       "Mela" = 1568924476;
       "Slack" = 803453959;
-      "Spark Mail" = 6445813049;
       "Swift Playground" = 1496833156;
       "WhatsApp" = 310633997;
       "XCode" = 497799835;

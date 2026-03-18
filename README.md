@@ -43,9 +43,26 @@ nix-darwin/
 
 ## Prerequisites
 
+### Basic Prerequisites
+
 - macOS on Apple Silicon (`aarch64-darwin`)
 - An administrator account
 - A working internet connection
+
+### Rosetta 2 Installation (for running x86_64 apps)
+
+```bash
+softwareupdate --install-rosetta
+```
+
+### Clean Bash and Zsh profiles
+
+Nix will try to create these files and complain is they already exist. 
+
+```
+sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
+```
 
 ## Step 1 — Install Nix
 
@@ -90,7 +107,7 @@ cd ~/Documents/github/nix-darwin
 If this is a fresh machine and nix-darwin is not yet installed, bootstrap it by running:
 
 ```bash
-nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#Stevens-MacBook-Air
+sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#Stevens-MacBook-Air
 ```
 
 > [!IMPORTANT]
@@ -149,7 +166,6 @@ Managed declaratively through [nix-homebrew](https://github.com/zhaofengli/nix-h
 | `balenaetcher` |
 | `discord` |
 | `docker-desktop` |
-| `ghostty` |
 | `google-chrome` |
 | `lens` |
 | `logi-options+` |
@@ -167,7 +183,6 @@ Installed via `mas` (Mac App Store CLI). Each entry needs the app's numeric ID.
 | Davinci Resolve | `571213070` |
 | Mela | `1568924476` |
 | Slack | `803453959` |
-| Spark Mail | `6445813049` |
 | Swift Playground | `1496833156` |
 | WhatsApp | `310633997` |
 | XCode | `497799835` |

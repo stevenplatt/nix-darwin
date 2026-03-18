@@ -11,9 +11,7 @@
         "/Applications/WhatsApp.app"
         "/System/Applications/Messages.app"
         "/Applications/Antigravity.app"
-        "/Applications/Ghostty.app"
         "/Applications/Google Chrome.app"
-        "/Applications/Spark Desktop.app"
       ];
       wvous-br-corner = 1;
       wvous-bl-corner = 1;
